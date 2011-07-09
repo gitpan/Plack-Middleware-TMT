@@ -2,7 +2,7 @@ package Plack::Middleware::TMT;
 use strict;
 use warnings;
 BEGIN {
-  $Plack::Middleware::TMT::VERSION = '0.01';
+  $Plack::Middleware::TMT::VERSION = '0.02';
 }
 use Carp qw/croak/;
 use parent 'Plack::Middleware';
@@ -72,12 +72,14 @@ sub _handle_template {
              : $req->path;
     $tmpl =~ s!^/!!;
 
-    if (!-e $self->include_path. '/'. $tmpl) {
+    my $ext = $self->tmpl_extension || '';
+
+    if (!-e $self->include_path. '/'. "$tmpl$ext") {
         return [404, ['Content-Type' => 'text/plain'], ['Not Found']];
     }
 
     $self->process_template(
-        $tmpl. ($self->tmpl_extension || ''),
+        "$tmpl$ext",
         200,
         $req,
     );
