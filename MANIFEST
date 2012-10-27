@@ -16,5 +16,6 @@ tmpl/index.mt
 tmpl/macro
 tmpl/macro_dumper
 xt/01_perlcritic.t
+xt/02_pod-coverage.t
 xt/03_pod.t
 xt/perlcriticrc
